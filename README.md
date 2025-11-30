@@ -1,6 +1,6 @@
 _wannabe software developer_ 
 
-_I build full-stack, cross-platform, and low-level stuff that interests me._
+_loves building full-stack, cross-platform, and low-level stuff that interests me._
 
 <br>
 
