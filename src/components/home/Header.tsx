@@ -52,7 +52,7 @@ export default function Header() {
               href={item.route}
               className={cn(
                 "flex align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200",
-                !isActive && "text-neutral-500"
+                !isActive && "text-neutral-500",
               )}
             >
               <span className="relative px-2 py-[.20rem]">

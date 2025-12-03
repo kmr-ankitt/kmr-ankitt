@@ -16,7 +16,9 @@ export default async function SelectedProjects() {
 
   return (
     <div>
-      <h1 className="text-2xl font-extrabold"><span className="text-[#ff6b35]">{">"}</span> projects</h1>
+      <h1 className="text-2xl font-extrabold">
+        <span className="text-[#ff6b35]">{">"}</span> projects
+      </h1>
       <div className="flex flex-col gap-10 my-5 lowercase">
         <div className="grid grid-cols-1 gap-6">
           {topItems.map((item, index) => (

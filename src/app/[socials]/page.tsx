@@ -10,15 +10,15 @@ const socials: { [key: string]: string } = {
   insta: "https://instagram.com/kmrankitt",
   resume: "/myresume.pdf",
   oldresume: "/resume.pdf",
-  webresume: "/webresume.pdf"
+  webresume: "/webresume.pdf",
 };
 
 type Socials = keyof typeof socials;
 
 export default async function page({
-  params
+  params,
 }: {
-  params: Promise<{ socials: Socials }>
+  params: Promise<{ socials: Socials }>;
 }) {
   const { socials: socialKey } = await params;
 

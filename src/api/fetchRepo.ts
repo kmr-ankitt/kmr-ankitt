@@ -7,7 +7,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Octokit } from "octokit";
 
-export interface Repository { name: string;
+export interface Repository {
+  name: string;
   id: string;
   url: string;
   stargazers: {
@@ -62,7 +63,9 @@ export const fetchPinnedRepositories = async () => {
   return user.pinnedItems.edges.map((edge: { node: unknown }) => edge.node);
 };
 
-export const fetchRepositoryDescriptions = async (pinnedItems: Repository[]) : Promise<string[]> => {
+export const fetchRepositoryDescriptions = async (
+  pinnedItems: Repository[],
+): Promise<string[]> => {
   const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
   });
@@ -74,7 +77,7 @@ export const fetchRepositoryDescriptions = async (pinnedItems: Repository[]) : P
         repo: item.name,
       });
       return data;
-    })
+    }),
   );
 
   return repoDescription
@@ -89,13 +92,16 @@ export const fetchRepoTags = async (pinnedItems: Repository[]) => {
 
   const repoTags = await Promise.all(
     pinnedItems.map(async (item) => {
-      const { data } = await octokit.request("GET /repos/{owner}/{repo}/topics", {
-        owner: "kmr-ankitt",
-        repo: item.name,
-      });
+      const { data } = await octokit.request(
+        "GET /repos/{owner}/{repo}/topics",
+        {
+          owner: "kmr-ankitt",
+          repo: item.name,
+        },
+      );
       return data;
-    })
+    }),
   );
 
   return repoTags.map((item) => item.names);
-}
+};

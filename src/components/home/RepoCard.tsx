@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 interface RepoCardProps {
   repository: {
@@ -14,7 +14,11 @@ interface RepoCardProps {
   tags: string[];
 }
 
-const RepoCard: React.FC<RepoCardProps> = ({ repository, description, tags }) => {
+const RepoCard: React.FC<RepoCardProps> = ({
+  repository,
+  description,
+  tags,
+}) => {
   return (
     <div className="p-4 border rounded-md shadow-md hover:shadow-lg hover:dark:border-zinc-500 duration-300 group transition-all">
       <Link href={repository.url}>
