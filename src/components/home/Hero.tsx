@@ -28,7 +28,7 @@ export default function Hero() {
         <p className="font-light leading-relaxed ">
           I&apos;m a {age} year old CS undergrad. I love building fullstack web
           and crossplatform applications, low level stuffs or anything that
-          interests me. My day starts and ends with the terminal.
+          interests me.
         </p>
       </div>
     </div>
