@@ -16,6 +16,10 @@ const routes = [
     name: "Project",
     route: "/project",
   },
+  {
+    name: "Blog",
+    route: "/blog",
+  }
 ];
 
 export default function Header() {
@@ -31,7 +35,11 @@ export default function Header() {
           router.push("/");
         } else if (e.key === "p") {
           e.preventDefault();
-          router.push("/projects");
+          router.push("/project");
+        }
+        else if (e.key === "b") {
+          e.preventDefault();
+          router.push("/blog");
         }
       });
     }
