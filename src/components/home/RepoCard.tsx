@@ -18,7 +18,7 @@ const RepoCard: React.FC<RepoCardProps> = ({
   tags,
 }) => {
   return (
-    <div className="p-4 border rounded-md shadow-md hover:shadow-lg hover:dark:border-zinc-500 duration-300 group transition-all">
+    <div className = "p-4 border rounded-lg hover:border-[#ff6b35] transition-colors" >
       <Link href={repository.url}>
         <div className="flex items-center gap-2">
           <svg
@@ -51,7 +51,7 @@ const RepoCard: React.FC<RepoCardProps> = ({
           ))}
         </div>
       </Link>
-    </div>
+    </div >
   );
 };
 
