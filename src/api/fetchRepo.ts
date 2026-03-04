@@ -1,107 +1,58 @@
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  gql,
-} from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { Octokit } from "octokit";
-
 export interface Repository {
-  name: string;
   id: string;
+  name: string;
   url: string;
-  stargazers: {
-    totalCount: number;
-  };
+  description: string | null;
+  stargazerCount: number;
+  tags: string[];
 }
 
-export const fetchPinnedRepositories = async () => {
-  const httpLink = createHttpLink({
-    uri: "https://api.github.com/graphql",
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    return {
-      headers: {
-        ...headers,
-        authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-    };
-  });
-
-  const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-  });
-
-  const { data } = await client.query({
-    query: gql`
-      {
-        user(login: "kmr-ankitt") {
-          pinnedItems(first: 6) {
-            totalCount
-            edges {
-              node {
-                ... on Repository {
+export async function fetchPinnedRepositories(): Promise<Repository[]> {
+  const query = `
+  {
+    user(login: "kmr-ankitt") {
+      pinnedItems(first: 6, types: REPOSITORY) {
+        nodes {
+          ... on Repository {
+            id
+            name
+            url
+            description
+            stargazerCount
+            repositoryTopics(first: 10) {
+              nodes {
+                topic {
                   name
-                  id
-                  url
-                  stargazers {
-                    totalCount
-                  }
                 }
               }
             }
           }
         }
       }
-    `,
+    }
+  }
+  `;
+
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+    body: JSON.stringify({ query }),
+
+    // Next.js cache
+    next: { revalidate: 3600 },
   });
 
-  const { user } = data;
-  return user.pinnedItems.edges.map((edge: { node: unknown }) => edge.node);
-};
+  const json = await res.json();
 
-export const fetchRepositoryDescriptions = async (
-  pinnedItems: Repository[],
-): Promise<string[]> => {
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
-
-  const repoDescription = await Promise.all(
-    pinnedItems.map(async (item) => {
-      const { data } = await octokit.request("GET /repos/{owner}/{repo}", {
-        owner: "kmr-ankitt",
-        repo: item.name,
-      });
-      return data;
-    }),
-  );
-
-  return repoDescription
-    .filter((item) => item.description !== null)
-    .map((item) => item.description as string);
-};
-
-export const fetchRepoTags = async (pinnedItems: Repository[]) => {
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
-
-  const repoTags = await Promise.all(
-    pinnedItems.map(async (item) => {
-      const { data } = await octokit.request(
-        "GET /repos/{owner}/{repo}/topics",
-        {
-          owner: "kmr-ankitt",
-          repo: item.name,
-        },
-      );
-      return data;
-    }),
-  );
-
-  return repoTags.map((item) => item.names);
-};
+  return json.data.user.pinnedItems.nodes.map((repo: any) => ({
+    id: repo.id,
+    name: repo.name,
+    url: repo.url,
+    description: repo.description,
+    stargazerCount: repo.stargazerCount,
+    tags: repo.repositoryTopics.nodes.map((t: any) => t.topic.name),
+  }));
+}

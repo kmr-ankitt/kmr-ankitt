@@ -1,7 +1,5 @@
 import {
   fetchPinnedRepositories,
-  fetchRepositoryDescriptions,
-  fetchRepoTags,
   Repository,
 } from "@/api/fetchRepo";
 import Link from "next/link";
@@ -11,8 +9,8 @@ import RepoCard from "../home/RepoCard";
 export default async function SelectedProjects() {
   const pinnedItems: Repository[] = await fetchPinnedRepositories();
   const topItems = pinnedItems.slice(0, 3);
-  const repoDesc: string[] = await fetchRepositoryDescriptions(topItems);
-  const repoTags = await fetchRepoTags(topItems);
+  const repoDesc: string[] = pinnedItems.map((item) => item.description || "No description");
+  const repoTags = pinnedItems.map((item) => item.tags);
 
   return (
     <div>

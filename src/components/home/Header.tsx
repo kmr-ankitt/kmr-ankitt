@@ -27,27 +27,17 @@ export default function Header() {
 
   const pathname = usePathname();
 
-  function isKeyPressed() {
-    if (typeof window !== "undefined") {
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "h") {
-          e.preventDefault();
-          router.push("/");
-        } else if (e.key === "p") {
-          e.preventDefault();
-          router.push("/project");
-        }
-        else if (e.key === "b") {
-          e.preventDefault();
-          router.push("/blog");
-        }
-      });
-    }
-  }
-
   useEffect(() => {
-    isKeyPressed();
-  });
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "h") router.push("/");
+      if (e.key === "p") router.push("/project");
+      if (e.key === "b") router.push("/blog");
+    };
+
+    window.addEventListener("keydown", handleKey);
+
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [router]);
 
   return (
     <div className="flex items-center justify-between m-3 mx-5 pt-5 mb-10">

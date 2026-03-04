@@ -6,11 +6,9 @@ interface RepoCardProps {
     id: string;
     name: string;
     url: string;
-    stargazers: {
-      totalCount: number;
-    };
+    stargazerCount: number;
   };
-  description: string;
+  description: string | null;
   tags: string[];
 }
 
@@ -40,7 +38,7 @@ const RepoCard: React.FC<RepoCardProps> = ({
         </div>
         <p className="text-gray-500 mb-4">{description}</p>
         <p className="text-sm text-gray-400">
-          ⭐ {repository.stargazers.totalCount} stars
+          ⭐ {repository.stargazerCount} stars
         </p>
         <div className="flex flex-wrap gap-2 mt-3">
           {tags.map((tag) => (
