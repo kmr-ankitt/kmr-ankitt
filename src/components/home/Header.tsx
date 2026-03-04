@@ -13,8 +13,8 @@ const routes = [
     route: "/",
   },
   {
-    name: "Projects",
-    route: "/projects",
+    name: "Project",
+    route: "/project",
   },
 ];
 
