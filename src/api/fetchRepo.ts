@@ -47,12 +47,14 @@ export async function fetchPinnedRepositories(): Promise<Repository[]> {
 
   const json = await res.json();
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   return json.data.user.pinnedItems.nodes.map((repo: any) => ({
     id: repo.id,
     name: repo.name,
     url: repo.url,
     description: repo.description,
     stargazerCount: repo.stargazerCount,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     tags: repo.repositoryTopics.nodes.map((t: any) => t.topic.name),
   }));
 }
