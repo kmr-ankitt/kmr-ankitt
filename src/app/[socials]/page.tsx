@@ -11,6 +11,7 @@ const socials: { [key: string]: string } = {
   resume: "/myresume.pdf",
   oldresume: "/resume.pdf",
   webresume: "/webresume.pdf",
+  gsoc:"https://kmr-ankitt.github.io/gsoc/"
 };
 
 type Socials = keyof typeof socials;
