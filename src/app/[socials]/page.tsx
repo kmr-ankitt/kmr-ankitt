@@ -11,6 +11,7 @@ const socials: { [key: string]: string } = {
   resume: "/resume.pdf",
   webresume: "/webresume.pdf",
   sysresume: "/sysresume.pdf",
+  myresume: "/myresume.pdf",
   gsoc:"https://kmr-ankitt.github.io/gsoc/"
 };
 
