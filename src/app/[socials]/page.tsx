@@ -8,9 +8,9 @@ const socials: { [key: string]: string } = {
   twitter: "https://x.com/kmrankitt",
   instagram: "https://instagram.com/kmrankitt",
   insta: "https://instagram.com/kmrankitt",
-  resume: "/myresume.pdf",
-  oldresume: "/resume.pdf",
+  resume: "/resume.pdf",
   webresume: "/webresume.pdf",
+  sysresume: "/sysresume.pdf",
   gsoc:"https://kmr-ankitt.github.io/gsoc/"
 };
 
