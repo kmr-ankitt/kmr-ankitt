@@ -14,6 +14,7 @@ const socials: { [key: string]: string } = {
   myresume: "/myresume.pdf",
   googleresume: "/googleresume.pdf",
   zoomresume: "/zoomresume.pdf",
+  noexpresume: "/noexpresume.pdf",
   gsoc:"https://kmr-ankitt.github.io/gsoc/"
 };
 
